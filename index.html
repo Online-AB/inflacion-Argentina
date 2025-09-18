@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Calculadora de inflación with detailed article on inflation in Argentina, causes, impact, and current situation." />
+    <meta name="author" content="Asad Company" />
+    <meta name="keywords" content="Inflation calculator, calculadora de inflación, inflacion Argentina, Argentina inflation, price calculator" />
+    <title>Calculadora de Inflación | Inflation Calculator Argentina</title>
+    <style>
+        /* Reset and base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: #f9fafb;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header, footer {
+            background: #004d99;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+        header h1 {
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+        main {
+            flex: 1 0 auto;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 15px 40px;
+        }
+        h2, h3 {
+            color: #004d99;
+            margin-bottom: 12px;
+        }
+        p {
+            margin-bottom: 16px;
+            font-size: 1rem;
+            color: #222;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        a:hover, a:focus {
+            text-decoration: underline;
+        }
+        article img {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+        }
+        /* Calculadora de inflación Table Style */
+        .calc-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        .calc-table th, 
+        .calc-table td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: center;
+            font-size: 1rem;
+        }
+        .calc-table th {
+            background-color: #0073e6;
+            color: white;
+        }
+        /* Calculator UI */
+        .calculator {
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgb(0 77 153 / 0.15);
+        }
+        .calculator label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #004d99;
+        }
+        .calculator input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1.8px solid #004d99;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .calculator button {
+            background-color: #004d99;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        .calculator button:hover {
+            background-color: #003366;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #0073e6;
+            font-weight: 700;
+            text-align: center;
+        }
+        /* Article summary below calculator */
+        .article-summary {
+            margin-top: 40px;
+            background: #e6f0ff;
+            padding: 18px 25px;
+            border-left: 6px solid #004d99;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #004d99;
+            line-height: 1.5;
+        }
+        /* Author Profile */
+        .author-profile {
+            margin-top: 50px;
+            border-top: 1px solid #ddd;
+            padding-top: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #555;
+        }
+        .author-profile img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #004d99;
+        }
+        .author-profile div {
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Inflation Calculator Argentina</h1>
+</header>
+
+<main>
+    <section class="calculator" aria-label="Inflation Calculator Section">
+        <h2>Calculadora de Inflación</h2>
+        <form id="inflationCalc" onsubmit="return calculateInflation()">
+            <label for="initialYear">Initial Year (e.g., 2010):</label>
+            <input type="number" id="initialYear" min="2010" max="2025" required />
+
+            <label for="finalYear">Final Year (e.g., 2025):</label>
+            <input type="number" id="finalYear" min="2010" max="2025" required />
+
+            <label for="amount">Amount in Pesos:</label>
+            <input type="number" id="amount" step="0.01" min="0" required />
+
+            <button type="submit">Calculate</button>
+        </form>
+
+        <div class="result" id="result"></div>
+
+        <table class="calc-table" aria-label="Annual inflation rates example">
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Inflation Rate (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>2010</td><td>10.9</td></tr>
+                <tr><td>2011</td><td>9.5</td></tr>
+                <tr><td>2012</td><td>10.8</td></tr>
+                <tr><td>2013</td><td>10.5</td></tr>
+                <tr><td>2014</td><td>23.9</td></tr>
+                <tr><td>2015</td><td>26.9</td></tr>
+                <tr><td>2016</td><td>40.0</td></tr>
+                <tr><td>2017</td><td>24.8</td></tr>
+                <tr><td>2018</td><td>47.6</td></tr>
+                <tr><td>2019</td><td>53.8</td></tr>
+                <tr><td>2020</td><td>36.1</td></tr>
+                <tr><td>2021</td><td>50.9</td></tr>
+                <tr><td>2022</td><td>94.8</td></tr>
+                <tr><td>2023</td><td>95.1</td></tr>
+                <tr><td>2024</td><td>65.0</td></tr>
+                <tr><td>2025</td><td>40.0 <small>(Estimated)</small></td></tr>
+            </tbody>
+        </table>
+
+        
+    </section>
+
+    <article>
+        <h2>Inflation in Argentina: Causes, Impact, and Current Situation</h2>
+        <img src="graph.jpg" alt="Flag of Argentina" />
+        <p>Argentina is one of the countries in Latin America most affected by inflation. For decades, high price increases have shaped the economy, daily life, and financial planning of its people. Understanding <a href="https://en.wikipedia.org/wiki/Inflation_in_Argentina" rel="dofollow" target="_blank">inflacion Argentina</a> is important not only for locals but also for investors, businesses, and international analysts.</p>
+
+        <h3>What Is Inflation in Argentina?</h3>
+        <p>Inflation refers to the continuous rise in the prices of goods and services. In Argentina, this problem is long-standing and much higher compared to other countries. The national statistics agency (INDEC) regularly publishes official figures, but many people also feel the impact directly at the supermarket, in rent prices, or in utility bills. Learn more about <a href="https://en.wikipedia.org/wiki/Inflation_in_Argentina" rel="dofollow" target="_blank">inflacion Argentina</a>.</p>
+
+        <h3>Causes of Inflation in Argentina</h3>
+        <p>Several factors explain why inflation in Argentina is persistent:</p>
+        <ul>
+            <li>Excessive money printing: To cover government spending, the Central Bank often issues more pesos, which decreases the currency’s value.</li>
+            <li>Fiscal deficit: The government spends more than it collects in taxes, generating economic imbalances.</li>
+            <li>Currency devaluation: The peso frequently loses value against the U.S. dollar, making imports more expensive.</li>
+            <li>Lack of confidence: Economic uncertainty leads businesses to increase prices as a precaution.</li>
+        </ul>
+        <p>For detailed insights into <a href="https://en.wikipedia.org/wiki/Inflation_in_Argentina" rel="dofollow" target="_blank">inflacion Argentina</a>, consult official sources and economic analyses.</p>
+
+        <h3>Impact on Daily Life</h3>
+        <p>The inflation affects people in various ways:</p>
+        <ul>
+            <li>Purchasing power: Salaries often lose value quickly, forcing workers to demand frequent wage adjustments.</li>
+            <li>Savings: Many Argentinians prefer to save in U.S. dollars rather than pesos to protect their money.</li>
+            <li>Business challenges: Companies face difficulties setting stable prices, negotiating contracts, and planning for the future.</li>
+        </ul>
+
+        <h3>Tools to Measure Inflation</h3>
+        <p>People often rely on tools like the calculadora de inflación to understand how much prices have changed over the years. For example, what cost 1,000 pesos in 2010 is worth many times more in 2025. These calculators help families and businesses see the real impact of <a href="https://en.wikipedia.org/wiki/Inflation_in_Argentina" rel="dofollow" target="_blank">inflacion Argentina</a> on their finances.</p>
+
+        <h3>Final Thoughts</h3>
+        <p>Inflation in Argentina is not just an economic statistic; it’s a daily challenge that shapes the way people live, save, and plan. Until the government finds a long-term solution to stabilize the peso and reduce fiscal deficits, <a href="https://en.wikipedia.org/wiki/Inflation_in_Argentina" rel="dofollow" target="_blank">inflacion Argentina</a> will remain a key issue for the country’s economy.</p>
+    </article>
+<div class="article-summary" aria-label="Summary about inflation">
+            Inflation in Argentina has long disrupted everyday finances and economic growth. This tool and information aim to help residents, businesses, and investors better understand and cope with its ongoing effects by providing a clear inflation calculator and insights into the country’s economic challenges.
+        </div>
+    <section class="author-profile" aria-label="Author Profile">
+    <img src="ASM.jpg" alt="Author profile picture" />
+    <div>
+        <strong>Author:</strong> ASM Company<br />
+        <small>Web Developer specializing in building user-friendly financial tools and interactive calculators. Passionate about creating clear and accessible web experiences for all users.</small>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    &copy; 2025 ASM Company. All rights reserved.
+</footer>
+
+<script>
+    // Annual inflation rates data from 2010 to 2025
+    const inflationRates = {
+        2010: 10.9, 2011: 9.5, 2012: 10.8, 2013: 10.5, 2014: 23.9, 2015: 26.9,
+        2016: 40.0, 2017: 24.8, 2018: 47.6, 2019: 53.8, 2020: 36.1, 2021: 50.9,
+        2022: 94.8, 2023: 95.1, 2024: 65.0, 2025: 40.0
+    };
+
+    function calculateInflation() {
+        const startYear = parseInt(document.getElementById('initialYear').value);
+        const endYear = parseInt(document.getElementById('finalYear').value);
+        const amount = parseFloat(document.getElementById('amount').value);
+
+        const resultDiv = document.getElementById('result');
+        if (startYear > endYear) {
+            resultDiv.textContent = "Error: Initial Year must be less than or equal to Final Year.";
+            resultDiv.style.color = "red";
+            return false;
+        }
+        if (startYear < 2010 || endYear > 2025) {
+            resultDiv.textContent = "Please enter years between 2010 and 2025.";
+            resultDiv.style.color = "red";
+            return false;
+        }
+
+        // Calculate inflation multiplier
+        let multiplier = 1;
+        for (let year = startYear + 1; year <= endYear; year++) {
+            let rate = inflationRates[year];
+            if (rate === undefined) {
+                resultDiv.textContent = "Inflation rate for year " + year + " not found.";
+                resultDiv.style.color = "red";
+                return false;
+            }
+            multiplier *= (1 + rate / 100);
+        }
+
+        const adjustedAmount = amount * multiplier;
+        resultDiv.style.color = "#0073e6";
+        resultDiv.innerHTML = `
+            Adjusted amount in ${endYear}: <strong>${adjustedAmount.toLocaleString('en-US', { style: 'currency', currency: 'ARS' })}</strong>
+            <br />
+            (Based on official inflation rates from 2010 to 2025)
+        `;
+        return false; // Prevent form submission
+    }
+</script>
+</body>
+</html>
